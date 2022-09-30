@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7fff99c208a6cb43b02e622f339150a, type: 3}
+  m_Name: Game Input Map
+  m_EditorClassIdentifier: 
+  defaultGroup: 0
+  groups:
+  - groupName: Default
+    guid: ef9ed5c8-788d-47b3-8b23-7b306dca5f39
+    items:
+    - rid: 295218457329270788
+    - rid: 295218457329270789
+    - rid: 295218457329270790
+    - rid: 295218457329270791
+    - rid: 295218457329270793
+    - rid: 295218457329270796
+    - rid: 295218457329270794
+    - rid: 295218457329270795
+    - rid: 295218457329270797
+    - rid: 295218457329270798
+  - groupName: Debug
+    guid: 6f25833f-4a9d-4bf5-b7a1-67093b45616e
+    items:
+    - rid: 295218457329270784
+    - rid: 295218457329270785
+  - groupName: UI
+    guid: c9da6a94-6c25-4ccb-a211-927ff8871456
+    items:
+    - rid: 295218457329270786
+    - rid: 295218457329270787
+    - rid: 295218457329270799
+  references:
+    version: 2
+    RefIds:
+    - rid: 295218457329270784
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Console
+        guid: 7d09f285-2eae-440c-8035-c3e756f78514
+        keys:
+        - key_keyboard/BackQuote
+    - rid: 295218457329270785
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Debug Displayer
+        guid: ae46e69d-110b-4da0-95bd-5a52233de3f5
+        keys:
+        - key_keyboard/F4
+    - rid: 295218457329270786
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Pause
+        guid: 1c0ac4f9-f7b5-480a-970a-a05c6763526d
+        keys:
+        - key_keyboard/Escape
+        - key_gamepad/Start
+    - rid: 295218457329270787
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Pause WebGL
+        guid: 4c3cb5a8-5372-4673-81bf-9e10840ebc19
+        keys:
+        - key_keyboard/Tab
+        - key_gamepad/Start
+    - rid: 295218457329270788
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Up
+        guid: a1042459-4a14-4561-b9cc-7230b2e33f80
+        keys:
+        - key_keyboard/UpArrow
+        - key_gamepad/LeftStickUp
+        - key_gamepad/DPadUp
+    - rid: 295218457329270789
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Down
+        guid: 2da37b68-41cd-4841-b300-bf5ea015cb58
+        keys:
+        - key_keyboard/DownArrow
+        - key_gamepad/LeftStickDown
+        - key_gamepad/DPadDown
+    - rid: 295218457329270790
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Left
+        guid: a5163b5b-f97c-40d8-88ee-a69c5feddd08
+        keys:
+        - key_keyboard/LeftArrow
+        - key_gamepad/LeftStickLeft
+        - key_gamepad/DPadLeft
+    - rid: 295218457329270791
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Right
+        guid: 82d4fa61-b17f-4378-bdee-d622de6a17f5
+        keys:
+        - key_keyboard/RightArrow
+        - key_gamepad/LeftStickRight
+        - key_gamepad/DPadRight
+    - rid: 295218457329270793
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Jump
+        guid: eac9ec26-b695-4ab8-a82a-c3344c72acf3
+        keys:
+        - key_keyboard/Z
+        - key_gamepad/A
+    - rid: 295218457329270794
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Grapple
+        guid: 55f84f56-4935-4c3f-a4b9-941d53c92e94
+        keys:
+        - key_keyboard/X
+        - key_gamepad/LeftTrigger
+    - rid: 295218457329270795
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Grapple jump
+        guid: 8db1dbbc-19c4-46c4-8934-b5e6be281e04
+        keys:
+        - key_keyboard/C
+        - key_gamepad/LeftBumper
+        - key_gamepad/X
+    - rid: 295218457329270796
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Grab
+        guid: 3a0a4a64-9f8a-4a7c-aa37-4b3c259321f9
+        keys:
+        - key_keyboard/Space
+        - key_gamepad/RightTrigger
+    - rid: 295218457329270797
+      type: {class: Input1DAxis, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Horizontal
+        guid: 4598a973-2b42-4131-a23e-ad296d9e156c
+        positiveAction: 82d4fa61-b17f-4378-bdee-d622de6a17f5
+        negativeAction: a5163b5b-f97c-40d8-88ee-a69c5feddd08
+    - rid: 295218457329270798
+      type: {class: Input1DAxis, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Vertical
+        guid: b577fa7e-a5c7-47ce-9dfe-063a4c6d9144
+        positiveAction: a1042459-4a14-4561-b9cc-7230b2e33f80
+        negativeAction: 2da37b68-41cd-4841-b300-bf5ea015cb58
+    - rid: 295218457329270799
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Displayer
+        guid: e364a749-0e24-4a7f-a206-d8c944474338
+        keys:
+        - key_keyboard/F3

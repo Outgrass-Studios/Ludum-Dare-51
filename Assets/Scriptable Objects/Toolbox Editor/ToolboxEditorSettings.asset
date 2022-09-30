@@ -23,7 +23,7 @@ MonoBehaviour:
   smallIconPadding: {x: 0.15, y: 0.15}
   customFolders: []
   useToolboxDrawers: 1
-  forceDefaultLists: 0
+  forceDefaultLists: 1
   decoratorDrawerHandlers: []
   conditionDrawerHandlers: []
   selfPropertyDrawerHandlers: []
