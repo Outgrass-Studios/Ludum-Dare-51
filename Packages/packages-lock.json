@@ -9,6 +9,13 @@
       },
       "hash": "42fbba876ee0a630a6f0dfa9e20c19027984982b"
     },
+    "com.brunomikoski.animationsequencer": {
+      "version": "https://github.com/brunomikoski/Animation-Sequencer.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "26c0b697cad7c44a50de26dd56cedf920a72e567"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.7",
       "depth": 1,

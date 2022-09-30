@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.browar.editor-toolbox": "https://github.com/arimger/Unity-Editor-Toolbox.git#upm",
+    "com.brunomikoski.animationsequencer": "https://github.com/brunomikoski/Animation-Sequencer.git",
     "com.unity.collab-proxy": "1.17.2",
     "com.unity.feature.2d": "1.0.0",
     "com.unity.ide.rider": "3.0.15",
