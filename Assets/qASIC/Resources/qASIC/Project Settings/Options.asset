@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableOptionsSystem: 1
   autoInitialize: 1
-  serializationType: 2
+  serializationType: 1
   savePath:
     buildPath:
       genericFolder: 62
-      filePath: settings.settings
+      filePath: settings.txt
     separateEditorPath: 1
     editorPath:
       genericFolder: 62
-      filePath: settings-editor.settings
+      filePath: settings-editor.txt
   startArgsDisableLoad: 1
   startArgsDisableSave: 1
   startArgsDisableInit: 1

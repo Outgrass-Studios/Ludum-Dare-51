@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 39234496}
   - component: {fileID: 2644069554161130611}
   - component: {fileID: 1249170479469477246}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -173,6 +173,10 @@ MonoBehaviour:
     guid: eac9ec26-b695-4ab8-a82a-c3344c72acf3
   grab:
     guid: 3a0a4a64-9f8a-4a7c-aa37-4b3c259321f9
+  grapple:
+    guid: 55f84f56-4935-4c3f-a4b9-941d53c92e94
+  grappleJump:
+    guid: 8db1dbbc-19c4-46c4-8934-b5e6be281e04
 --- !u!114 &1249170479469477246
 MonoBehaviour:
   m_ObjectHideFlags: 0

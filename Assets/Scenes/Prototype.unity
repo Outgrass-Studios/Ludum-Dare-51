@@ -285,7 +285,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7.714286
+  orthographic size: 9.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4035,6 +4035,14 @@ PrefabInstance:
     - target: {fileID: 2644069554161130610, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644069554161130611, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
+      propertyPath: grapple.guid
+      value: 55f84f56-4935-4c3f-a4b9-941d53c92e94
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644069554161130611, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
+      propertyPath: grappleJump.guid
+      value: 8db1dbbc-19c4-46c4-8934-b5e6be281e04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}

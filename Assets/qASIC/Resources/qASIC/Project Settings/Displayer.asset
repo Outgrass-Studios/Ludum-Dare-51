@@ -22,6 +22,6 @@ MonoBehaviour:
   debugGenerationMessage: Generated debug displayer. This only happens in the editor
     and dev build!
   debugGenerationMessageColor: warning
-  createDebugInEditor: 0
-  createDebugInDeveloperBuild: 0
+  createDebugInEditor: 1
+  createDebugInDeveloperBuild: 1
   createDebugInBuild: 0

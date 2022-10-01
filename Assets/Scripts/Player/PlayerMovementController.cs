@@ -47,6 +47,8 @@ namespace Game.Player
         [SerializeField] InputMapItemReference vertical;
         [SerializeField] InputMapItemReference jump;
         [SerializeField] InputMapItemReference grab;
+        [SerializeField] InputMapItemReference grapple;
+        [SerializeField] InputMapItemReference grappleJump;
 
         PlayerInput _input = new PlayerInput()
         { 
@@ -74,6 +76,8 @@ namespace Game.Player
             qDebug.DisplayValue("move", _input.move);
             qDebug.DisplayValue("jump", _input.jump);
             qDebug.DisplayValue("jumpThisFrame", _input.jumpThisFrame);
+            qDebug.DisplayValue("grapple", _input.grapple);
+            qDebug.DisplayValue("grappleJump", _input.grappleJump);
         }
 
         private void FixedUpdate()
@@ -96,7 +100,20 @@ namespace Game.Player
             bool previousJump = _input.jump;
             bool jumpThisFramePrevious = _input.jumpThisFrame;
             bool jumpInput = InputManager.GetInput(jump.GetGroupName(), jump.GetItemName());
+            bool grappleInput = InputManager.GetInput(grapple.GetGroupName(), grapple.GetItemName());
+            bool grappleJumpInput = InputManager.GetInput(grappleJump.GetGroupName(), grappleJump.GetItemName());
             float jumpPressedTime = InputManager.GetInputDown(jump.GetGroupName(), jump.GetItemName()) ? Time.time : _input.jumpPressedTime;
+
+            if (grappleInput == !_input.grapple)
+            {
+                if(grappleInput)
+                    Grab();
+                else
+                    LetGo();
+            }
+
+            if (grappleJumpInput == !_input.grappleJump && grappleJumpInput)
+                GrappleJump();
 
             _input = new PlayerInput()
             {
@@ -106,6 +123,8 @@ namespace Game.Player
                 jumpThisFrame = (!previousJump && jumpInput) || jumpThisFramePrevious,
                 jumpPressedTime = jumpPressedTime,
                 grab = InputManager.GetInput(grab.GetGroupName(), grab.GetItemName()),
+                grapple = grappleInput,
+                grappleJump = grappleJumpInput
             };
 
             if (_input.move.x != 0f && !_isGrabing)
@@ -201,6 +220,23 @@ namespace Game.Player
                 Mathf.Sqrt(jumpHeight * 2f * jumpGravity));
             _isJumping = true;
         }
+        void Grab()
+        {
+            Vector2 dir = _input.move;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir);
+
+            Debug.Log("Grabbed");
+            // Swing mechanics
+            // Collision handling
+        }
+        void LetGo()
+        {
+            Debug.Log("Let go");
+        }
+        void GrappleJump()
+        {
+            Debug.Log("Grapple jumped");
+        }
 
         bool IsGrounded() =>
             CheckBox(jumpCheckCenter, jumpCheckSize, jumpCheckLayer);
@@ -232,6 +268,8 @@ namespace Game.Player
             public bool jumpThisFrame;
             public float jumpPressedTime;
             public bool grab;
+            public bool grapple;
+            public bool grappleJump;
         }
     }
 }

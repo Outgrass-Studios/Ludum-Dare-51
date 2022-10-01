@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Input
   m_EditorClassIdentifier: 
   map: {fileID: 11400000, guid: 261b2d3691b5bbe478491be75b79dc16, type: 2}
-  serializationType: 2
+  serializationType: 1
   filePath:
     buildPath:
       genericFolder: 62
-      filePath: input.json
-    separateEditorPath: 0
+      filePath: input.txt
+    separateEditorPath: 1
     editorPath:
       genericFolder: 62
-      filePath: 
-  uimAxisMapper: {fileID: 11400000, guid: 041847f58c2b1664cab13e3621daaf25, type: 2}
+      filePath: input-editor.txt
+  uimAxisMapper: {fileID: 0}
   startArgsDisableLoad: 1
   startArgsDisableSave: 1

@@ -131,7 +131,6 @@ MonoBehaviour:
         keys:
         - key_keyboard/C
         - key_gamepad/LeftBumper
-        - key_gamepad/X
     - rid: 295218457329270796
       type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
       data:
