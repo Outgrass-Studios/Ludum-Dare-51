@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2644069554161130610}
   - component: {fileID: 2644069554161130609}
   - component: {fileID: 2644069554161130604}
+  - component: {fileID: 39234496}
   - component: {fileID: 2644069554161130611}
-  - component: {fileID: 2644069554161130605}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -103,11 +103,27 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 58e49e62b0df248479322711a40f8f73, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!70 &39234496
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644069554161130608}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 1}
+  m_Direction: 0
 --- !u!114 &2644069554161130611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,12 +137,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2644069554161130604}
-  gravity: 30
+  walkSpeed: 10
+  groundAcceleration: 10
+  groundDeceleration: 6
+  airAcceleration: 5
+  airDeceleration: 5
+  jumpGravity: 60
+  fallGravity: 70
   fallMultiplier: 2
   lowJumpMultiplier: 3
-  jumpHeight: 3
+  jumpHeight: 4
   jumpCheckCenter: {x: 0, y: -0.525}
-  jumpCheckSize: {x: 1, y: 0.05}
+  jumpCheckSize: {x: 0.95, y: 0.05}
   jumpCheckLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -136,34 +158,3 @@ MonoBehaviour:
     guid: b577fa7e-a5c7-47ce-9dfe-063a4c6d9144
   jump:
     guid: eac9ec26-b695-4ab8-a82a-c3344c72acf3
-  _input:
-    move: {x: 0, y: 0}
-    jump: 0
-    jumpThisFrame: 0
-  _isGrounded: 0
---- !u!61 &2644069554161130605
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2644069554161130608}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0

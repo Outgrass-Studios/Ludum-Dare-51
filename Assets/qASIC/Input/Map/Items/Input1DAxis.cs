@@ -1,5 +1,5 @@
 ﻿using System;
-
+using UnityEngine;
 
 namespace qASIC.InputManagement.Map
 {
@@ -14,8 +14,7 @@ namespace qASIC.InputManagement.Map
 
         public override float ReadValue(Func<string, float> func)
         {
-            InputBinding positive = Map
-                .GetItem<InputBinding>(positiveAction);
+            InputBinding positive = Map.GetItem<InputBinding>(positiveAction);
             InputBinding negative = Map.GetItem<InputBinding>(negativeAction);
 
             float positiveValue = positive == null ? 0f : positive.ReadValue(func);
@@ -33,6 +32,6 @@ namespace qASIC.InputManagement.Map
         }
 
         public override float GetHighestValue(float a, float b) =>
-            a > b ? a : b;
+            Mathf.Abs(a) > Mathf.Abs(b) ? a : b;
     }
 }

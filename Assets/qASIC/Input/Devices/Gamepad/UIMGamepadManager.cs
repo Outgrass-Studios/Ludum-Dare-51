@@ -14,6 +14,7 @@ namespace qASIC.InputManagement.Devices
         [RuntimeInitializeOnLoadMethod]
         static void Initialize()
         {
+#if !qASIC_CABLEBOX_DISABLE_UIM_GAMEPADS
             InputUpdateManager.OnUpdate += Update;
 
             _joystickNames = Input.GetJoystickNames();
@@ -21,6 +22,7 @@ namespace qASIC.InputManagement.Devices
             for (int i = 0; i < _joystickNames.Length; i++)
                 if (!string.IsNullOrEmpty(_joystickNames[i]))
                     AddGamepad(_joystickNames[i], i);
+#endif
         }
 
         private static void Update()

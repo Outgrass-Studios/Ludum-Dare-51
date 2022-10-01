@@ -44,7 +44,7 @@ namespace qASIC.InputManagement.Map
 
         public T GetItem<T>(string guid) where T : InputMapItem
         {
-            if (ItemsDictionary.ContainsKey(guid))
+            if (!ItemsDictionary.ContainsKey(guid))
                 return null;
 
             return (T)ItemsDictionary[guid];

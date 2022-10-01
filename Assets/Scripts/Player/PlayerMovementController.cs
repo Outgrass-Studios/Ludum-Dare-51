@@ -9,7 +9,17 @@ namespace Game.Player
     public class PlayerMovementController : MonoBehaviour
     {
         [SerializeField] Rigidbody2D rb;
-        [SerializeField] float gravity;
+
+        [Header("Movement")]
+        [SerializeField] float walkSpeed;
+        [SerializeField] float groundAcceleration;
+        [SerializeField] float groundDeceleration;
+        [SerializeField] float airAcceleration;
+        [SerializeField] float airDeceleration;
+
+        [Header("Gravity")]
+        [SerializeField] float jumpGravity;
+        [SerializeField] float fallGravity;
         [SerializeField] float fallMultiplier;
         [SerializeField] float lowJumpMultiplier;
         [SerializeField] float jumpHeight = 3f;
@@ -17,12 +27,16 @@ namespace Game.Player
         [SerializeField] Vector2 jumpCheckSize;
         [SerializeField] LayerMask jumpCheckLayer;
 
+        [Header("Input")]
         [SerializeField] InputMapItemReference horizontal;
         [SerializeField] InputMapItemReference vertical;
         [SerializeField] InputMapItemReference jump;
 
-        [Disable] [SerializeField] PlayerInput _input;
-        [Disable] [SerializeField] bool _isGrounded;
+        PlayerInput _input;
+        bool _isGrounded;
+
+        float _lastJumpTime;
+        bool _isJumping;
 
         private void Reset()
         {
@@ -30,6 +44,23 @@ namespace Game.Player
         }
 
         private void Update()
+        {
+            ReadInput();
+
+            qDebug.DisplayValue("move", _input.move);
+            qDebug.DisplayValue("jump", _input.jump);
+            qDebug.DisplayValue("jumpThisFrame", _input.jumpThisFrame);
+        }
+
+        private void FixedUpdate()
+        {
+            Move(_isGrounded ? groundAcceleration : airAcceleration, _isGrounded ? groundDeceleration : airDeceleration);
+            Gravity();
+
+            qDebug.DisplayValue("velocity", rb.velocity);
+        }
+
+        void ReadInput()
         {
             bool previousJump = _input.jump;
             bool jumpThisFramePrevious = _input.jumpThisFrame;
@@ -44,16 +75,50 @@ namespace Game.Player
             };
         }
 
-        private void FixedUpdate()
+        void Move(float acceleration, float deceleration, float lerp = 1f)
         {
-            _isGrounded = IsGrounded();
-            if (_input.jumpThisFrame && _isGrounded)
-                rb.velocity = Vector2.up * Mathf.Sqrt(jumpHeight * 2f * gravity);
+            float targetSpeed = _input.move.x * walkSpeed;
+            targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, lerp);
+            float accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
 
-            rb.velocity -= Vector2.up * gravity * ((_input.jump ? fallMultiplier : lowJumpMultiplier) - 1) * Time.fixedDeltaTime;
+            accelerationRate = 50 * accelerationRate / walkSpeed;
+
+            float speedDifference = targetSpeed - rb.velocity.x;
+            float movement = speedDifference * accelerationRate;
+
+            rb.AddForce(movement * Vector2.right);
+        }
+
+        void Gravity()
+        {
+            bool isGroundedPrevious = _isGrounded;
+            _isGrounded = IsGrounded();
+
+            float gravity = rb.velocity.y >= 0f ? jumpGravity : fallGravity;
+
+            switch (_isGrounded)
+            {
+                case true:
+                    if (!isGroundedPrevious)
+                        _isJumping = false;
+
+                    if (_input.jumpThisFrame)
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x,
+                            Mathf.Sqrt(jumpHeight * 2f * jumpGravity));
+                        _lastJumpTime = Time.time;
+                        _isJumping = true;
+                    }
+                    break;
+                case false:
+                    rb.velocity -= Vector2.up * gravity * ((_input.jump ? fallMultiplier : lowJumpMultiplier) - 1) * Time.fixedDeltaTime;
+                    break;
+            }
 
             if (_input.jumpThisFrame)
                 _input.jumpThisFrame = false;
+
+            qDebug.DisplayValue("_isGrounded", _isGrounded);
         }
 
         bool IsGrounded() =>
