@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using qASIC;
 using qASIC.InputManagement;
+using UnityEngine.Windows;
 
 namespace Game.Player
 {
@@ -27,6 +28,16 @@ namespace Game.Player
         [SerializeField] Vector2 jumpCheckSize;
         [SerializeField] LayerMask jumpCheckLayer;
 
+        [Header("Wall jumping & climbing")]
+        [SerializeField] Vector2 wallCheckCenter;
+        [SerializeField] Vector2 wallCheckSize;
+        [SerializeField] LayerMask wallCheckLayer;
+        [SerializeField] float wallClimbGravityThreashold = 0.3f;
+        [SerializeField] float wallSlideSpeed;
+        [SerializeField] float wallClimbSpeed;
+        [SerializeField] float wallClimbJump;
+        [SerializeField] Vector2 wallSlideJump;
+
         [Header("Assist")]
         [SerializeField] float coyoteTime = 0.2f;
         [SerializeField] float jumpQueue = 0.2f;
@@ -35,12 +46,21 @@ namespace Game.Player
         [SerializeField] InputMapItemReference horizontal;
         [SerializeField] InputMapItemReference vertical;
         [SerializeField] InputMapItemReference jump;
+        [SerializeField] InputMapItemReference grab;
 
-        PlayerInput _input;
+        PlayerInput _input = new PlayerInput()
+        { 
+            jumpPressedTime = float.MinValue,
+        };
         bool _isGrounded;
+        bool _isTouchingWall;
 
         float _lastGroundTime;
         bool _isJumping;
+        bool _isGrabing;
+        bool _isWallSliding;
+
+        bool _flipDirection = false;
 
         private void Reset()
         {
@@ -58,8 +78,15 @@ namespace Game.Player
 
         private void FixedUpdate()
         {
-            Move(_isGrounded ? groundAcceleration : airAcceleration, _isGrounded ? groundDeceleration : airDeceleration);
             Gravity();
+
+            if (!_isGrabing)
+                Move(_isGrounded ? groundAcceleration : airAcceleration, _isGrounded ? groundDeceleration : airDeceleration);
+
+            if (_input.jumpThisFrame)
+                _input.jumpThisFrame = false;
+
+            qDebug.DisplayValue("_isGrounded", _isGrounded);
 
             qDebug.DisplayValue("velocity", rb.velocity);
         }
@@ -78,7 +105,11 @@ namespace Game.Player
                 jump = jumpInput,
                 jumpThisFrame = (!previousJump && jumpInput) || jumpThisFramePrevious,
                 jumpPressedTime = jumpPressedTime,
+                grab = InputManager.GetInput(grab.GetGroupName(), grab.GetItemName()),
             };
+
+            if (_input.move.x != 0f && !_isGrabing)
+                _flipDirection = _input.move.x < 0f;
         }
 
         void Move(float acceleration, float deceleration, float lerp = 1f)
@@ -97,10 +128,47 @@ namespace Game.Player
 
         void Gravity()
         {
+            _isTouchingWall = IsTouchingWall();
             bool isGroundedPrevious = _isGrounded;
             _isGrounded = IsGrounded();
 
             float gravity = rb.velocity.y >= 0f ? jumpGravity : fallGravity;
+
+            bool isMovingHoritontally = _input.move.x != 0f;
+            bool gravityThreasholdReached = rb.velocity.y <= wallClimbGravityThreashold;
+
+            if (!_isGrounded)
+            {
+                _isGrabing = _isTouchingWall && _input.grab && (gravityThreasholdReached || _isGrabing); 
+                _isWallSliding = _isTouchingWall && isMovingHoritontally && gravityThreasholdReached && !_isGrabing;
+
+                if (_isWallSliding)
+                {
+                    rb.velocity = Vector2.down * wallSlideSpeed;
+
+                    if (_input.jumpThisFrame)
+                    {
+                        Debug.Log("JUMP");
+                        rb.AddForce(wallSlideJump.x * (_flipDirection ? 1f : -1f) * Vector2.right, ForceMode2D.Impulse);
+                        Jump(wallSlideJump.y);
+                        _isWallSliding = false;
+                    }
+
+                    return;
+                }
+
+                if (_isGrabing)
+                {
+                    rb.velocity = new Vector2(0f, _input.move.y * wallClimbSpeed);
+
+                    if (_input.jumpThisFrame)
+                    {
+                        Jump(wallClimbJump);
+                        _isGrabing = false;
+                    }
+                    return;
+                }
+            }
 
             switch (_isGrounded)
             {
@@ -113,26 +181,21 @@ namespace Game.Player
                     }
 
                     if (_input.jumpThisFrame)
-                        Jump();
+                        Jump(jumpHeight);
                     break;
                 case false:
                     if (isGroundedPrevious)
                         _lastGroundTime = Time.time;
 
                     if ((Time.time - _lastGroundTime) <= coyoteTime && !_isJumping && _input.jumpThisFrame)
-                        Jump();
+                        Jump(jumpHeight);
 
-                    rb.velocity -= Vector2.up * gravity * ((_input.jump ? fallMultiplier : lowJumpMultiplier) - 1) * Time.fixedDeltaTime;
+                    rb.velocity -= Vector2.up * gravity * ((_input.jump && rb.velocity.y >= 0f ? fallMultiplier : lowJumpMultiplier) - 1) * Time.fixedDeltaTime;
                     break;
             }
-
-            if (_input.jumpThisFrame)
-                _input.jumpThisFrame = false;
-
-            qDebug.DisplayValue("_isGrounded", _isGrounded);
         }
 
-        void Jump()
+        void Jump(float jumpHeight)
         {
             rb.velocity = new Vector2(rb.velocity.x,
                 Mathf.Sqrt(jumpHeight * 2f * jumpGravity));
@@ -140,12 +203,25 @@ namespace Game.Player
         }
 
         bool IsGrounded() =>
-            Physics2D.OverlapBoxAll((Vector2)transform.position + jumpCheckCenter, jumpCheckSize, 0f, jumpCheckLayer).Length != 0;
+            CheckBox(jumpCheckCenter, jumpCheckSize, jumpCheckLayer);
+
+        bool IsTouchingWall()
+        {
+            Vector2 center = wallCheckCenter;
+            center.x *= _flipDirection ? -1f : 1f;
+
+            return CheckBox(center, wallCheckSize, wallCheckLayer);
+        }
+
+        bool CheckBox(Vector2 center, Vector2 size, LayerMask layer) =>
+            Physics2D.OverlapBoxAll((Vector2)transform.position + center, size, 0f, layer).Length != 0;
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(transform.position + (Vector3)jumpCheckCenter, new Vector3(jumpCheckSize.x, jumpCheckSize.y, 0.1f));
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(transform.position + (Vector3)wallCheckCenter, new Vector3(wallCheckSize.x, wallCheckSize.y, 0.1f));
         }
 
         [System.Serializable]
@@ -155,6 +231,7 @@ namespace Game.Player
             public bool jump;
             public bool jumpThisFrame;
             public float jumpPressedTime;
+            public bool grab;
         }
     }
 }

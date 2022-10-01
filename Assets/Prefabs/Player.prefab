@@ -153,6 +153,16 @@ MonoBehaviour:
   jumpCheckLayer:
     serializedVersion: 2
     m_Bits: 64
+  wallCheckCenter: {x: 0.525, y: 0}
+  wallCheckSize: {x: 0.05, y: 0.95}
+  wallCheckLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  wallClimbGravityThreashold: 0.5
+  wallSlideSpeed: 3
+  wallClimbSpeed: 10
+  wallClimbJump: 1.5
+  wallSlideJump: {x: 100, y: 100}
   coyoteTime: 0.1
   jumpQueue: 0.1
   horizontal:
@@ -161,6 +171,8 @@ MonoBehaviour:
     guid: b577fa7e-a5c7-47ce-9dfe-063a4c6d9144
   jump:
     guid: eac9ec26-b695-4ab8-a82a-c3344c72acf3
+  grab:
+    guid: 3a0a4a64-9f8a-4a7c-aa37-4b3c259321f9
 --- !u!114 &1249170479469477246
 MonoBehaviour:
   m_ObjectHideFlags: 0
