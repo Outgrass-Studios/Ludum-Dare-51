@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultGroup: 0
   groups:
-  - groupName: Default
+  - itemName: Game
     guid: ef9ed5c8-788d-47b3-8b23-7b306dca5f39
     items:
     - rid: 295218457329270788
@@ -27,12 +27,12 @@ MonoBehaviour:
     - rid: 295218457329270795
     - rid: 295218457329270797
     - rid: 295218457329270798
-  - groupName: Debug
+  - itemName: Debug
     guid: 6f25833f-4a9d-4bf5-b7a1-67093b45616e
     items:
     - rid: 295218457329270784
     - rid: 295218457329270785
-  - groupName: UI
+  - itemName: UI
     guid: c9da6a94-6c25-4ccb-a211-927ff8871456
     items:
     - rid: 295218457329270786

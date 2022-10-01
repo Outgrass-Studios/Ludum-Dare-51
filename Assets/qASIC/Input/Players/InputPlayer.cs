@@ -107,6 +107,7 @@ namespace qASIC.InputManagement.Players
 
             foreach (IInputDevice device in _devices)
             {
+                item.Map = Map;
                 T readValue = item.ReadValue(device.GetInputValue);
                 value = item.GetHighestValue(value, readValue);
             }

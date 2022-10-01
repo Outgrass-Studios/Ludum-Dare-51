@@ -14,8 +14,9 @@ namespace qASIC.InputManagement.Map
 
         public override float ReadValue(Func<string, float> func)
         {
-            InputBinding positive = map.GetItem<InputBinding>(positiveAction);
-            InputBinding negative = map.GetItem<InputBinding>(negativeAction);
+            InputBinding positive = Map
+                .GetItem<InputBinding>(positiveAction);
+            InputBinding negative = Map.GetItem<InputBinding>(negativeAction);
 
             float positiveValue = positive == null ? 0f : positive.ReadValue(func);
             float negativeValue = negative == null ? 0f : negative.ReadValue(func);
@@ -25,8 +26,8 @@ namespace qASIC.InputManagement.Map
 
         public override InputEventType GetInputEvent(Func<string, InputEventType> func)
         {
-            InputBinding positive = map.GetItem<InputBinding>(positiveAction);
-            InputBinding negative = map.GetItem<InputBinding>(negativeAction);
+            InputBinding positive = Map.GetItem<InputBinding>(positiveAction);
+            InputBinding negative = Map.GetItem<InputBinding>(negativeAction);
 
             return positive.GetInputEvent(func) | negative.GetInputEvent(func);
         }
