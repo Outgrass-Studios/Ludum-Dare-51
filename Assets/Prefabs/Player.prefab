@@ -152,6 +152,8 @@ MonoBehaviour:
   jumpCheckLayer:
     serializedVersion: 2
     m_Bits: 64
+  coyoteTime: 0.1
+  jumpQueue: 0.1
   horizontal:
     guid: 4598a973-2b42-4131-a23e-ad296d9e156c
   vertical:

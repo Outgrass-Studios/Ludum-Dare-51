@@ -27,6 +27,10 @@ namespace Game.Player
         [SerializeField] Vector2 jumpCheckSize;
         [SerializeField] LayerMask jumpCheckLayer;
 
+        [Header("Assist")]
+        [SerializeField] float coyoteTime = 0.2f;
+        [SerializeField] float jumpQueue = 0.2f;
+
         [Header("Input")]
         [SerializeField] InputMapItemReference horizontal;
         [SerializeField] InputMapItemReference vertical;
@@ -35,7 +39,7 @@ namespace Game.Player
         PlayerInput _input;
         bool _isGrounded;
 
-        float _lastJumpTime;
+        float _lastGroundTime;
         bool _isJumping;
 
         private void Reset()
@@ -65,6 +69,7 @@ namespace Game.Player
             bool previousJump = _input.jump;
             bool jumpThisFramePrevious = _input.jumpThisFrame;
             bool jumpInput = InputManager.GetInput(jump.GetGroupName(), jump.GetItemName());
+            float jumpPressedTime = InputManager.GetInputDown(jump.GetGroupName(), jump.GetItemName()) ? Time.time : _input.jumpPressedTime;
 
             _input = new PlayerInput()
             {
@@ -72,6 +77,7 @@ namespace Game.Player
                 InputManager.GetFloatInput(vertical.GetGroupName(), vertical.GetItemName())),
                 jump = jumpInput,
                 jumpThisFrame = (!previousJump && jumpInput) || jumpThisFramePrevious,
+                jumpPressedTime = jumpPressedTime,
             };
         }
 
@@ -100,17 +106,22 @@ namespace Game.Player
             {
                 case true:
                     if (!isGroundedPrevious)
+                    {
                         _isJumping = false;
+                        if ((Time.time - _input.jumpPressedTime) <= jumpQueue)
+                            _input.jumpThisFrame = true;
+                    }
 
                     if (_input.jumpThisFrame)
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x,
-                            Mathf.Sqrt(jumpHeight * 2f * jumpGravity));
-                        _lastJumpTime = Time.time;
-                        _isJumping = true;
-                    }
+                        Jump();
                     break;
                 case false:
+                    if (isGroundedPrevious)
+                        _lastGroundTime = Time.time;
+
+                    if ((Time.time - _lastGroundTime) <= coyoteTime && !_isJumping && _input.jumpThisFrame)
+                        Jump();
+
                     rb.velocity -= Vector2.up * gravity * ((_input.jump ? fallMultiplier : lowJumpMultiplier) - 1) * Time.fixedDeltaTime;
                     break;
             }
@@ -119,6 +130,13 @@ namespace Game.Player
                 _input.jumpThisFrame = false;
 
             qDebug.DisplayValue("_isGrounded", _isGrounded);
+        }
+
+        void Jump()
+        {
+            rb.velocity = new Vector2(rb.velocity.x,
+                Mathf.Sqrt(jumpHeight * 2f * jumpGravity));
+            _isJumping = true;
         }
 
         bool IsGrounded() =>
@@ -136,6 +154,7 @@ namespace Game.Player
             public Vector2 move;
             public bool jump;
             public bool jumpThisFrame;
+            public float jumpPressedTime;
         }
     }
 }
