@@ -146,13 +146,14 @@ GameObject:
   - component: {fileID: 5419627916984170880}
   - component: {fileID: 5419627916984170887}
   - component: {fileID: 5419627916984170886}
+  - component: {fileID: 1794168918890090181}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5419627916984170880
 RectTransform:
   m_ObjectHideFlags: 0
@@ -218,6 +219,22 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &1794168918890090181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5419627916984170885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20e48f56b946a89459ae1ac36929a1ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  changeOnBuild: 1
+  changeOnDevBuild: 0
+  changeInEditor: 0
 --- !u!1 &5419627917910577414
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,7 +246,6 @@ GameObject:
   - component: {fileID: 5419627917910577411}
   - component: {fileID: 5419627917910577410}
   - component: {fileID: 5419627917910577415}
-  - component: {fileID: 1262346298193864201}
   m_Layer: 0
   m_Name: Debug Displayer
   m_TagString: Untagged
@@ -297,19 +313,3 @@ MonoBehaviour:
   removeDuplicates: 1
   item:
     guid: ae46e69d-110b-4da0-95bd-5a52233de3f5
---- !u!114 &1262346298193864201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5419627917910577414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20e48f56b946a89459ae1ac36929a1ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  changeOnBuild: 1
-  changeOnDevBuild: 0
-  changeInEditor: 0
