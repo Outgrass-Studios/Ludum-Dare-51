@@ -195,7 +195,7 @@ namespace qASIC.XInput.Devices
             if (HasDeadZone(button))
                 value = GamepadUtility.CalculateDeadZone(value, DeadZone.x, DeadZone.y);
 
-            return value;
+            return Mathf.Abs(value);
         }
 
         bool HasDeadZone(GamepadButton button)
