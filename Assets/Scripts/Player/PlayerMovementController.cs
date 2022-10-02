@@ -36,10 +36,11 @@ namespace Game.Player
         [SerializeField] float wallSlideSpeed;
         [SerializeField] float wallClimbSpeed;
         [SerializeField] float wallClimbJump;
-        [SerializeField] Vector2 wallSlideJump;
+        [SerializeField] float wallJumpXForce;
 
         [Header("Assist")]
         [SerializeField] float coyoteTime = 0.2f;
+        [SerializeField] float coyoteWallJumpTime = 0.2f;
         [SerializeField] float jumpQueue = 0.2f;
 
         [Header("Input")]
@@ -62,7 +63,12 @@ namespace Game.Player
         bool _isGrabing;
         bool _isWallSliding;
 
+        float _lastWallSlideTime;
+        float _lastGrabTime;
+        bool _canCoyote;
+
         bool _flipDirection = false;
+        bool _wasLastWallFlipped = false;
 
         private void Reset()
         {
@@ -93,6 +99,8 @@ namespace Game.Player
             qDebug.DisplayValue("_isGrounded", _isGrounded);
 
             qDebug.DisplayValue("velocity", rb.velocity);
+            qDebug.DisplayValue("_canCoyote", _canCoyote);
+            qDebug.DisplayValue("_isJumping", _isJumping);
         }
 
         void ReadInput()
@@ -134,8 +142,11 @@ namespace Game.Player
         void Move(float acceleration, float deceleration, float lerp = 1f)
         {
             float targetSpeed = _input.move.x * walkSpeed;
+
             targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, lerp);
-            float accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+
+            bool useAcceleration = (Mathf.Abs(targetSpeed) > 0.01f) || Mathf.Abs(rb.velocity.x) > walkSpeed;
+            float accelerationRate = useAcceleration ? acceleration : deceleration;
 
             accelerationRate = 50 * accelerationRate / walkSpeed;
 
@@ -158,33 +169,36 @@ namespace Game.Player
 
             if (!_isGrounded)
             {
-                _isGrabing = _isTouchingWall && _input.grab && (gravityThreasholdReached || _isGrabing); 
+                _isGrabing = _isTouchingWall && _input.grab && (gravityThreasholdReached || _isGrabing);
                 _isWallSliding = _isTouchingWall && isMovingHoritontally && gravityThreasholdReached && !_isGrabing;
+     
+                if (IsTouchingAnyWall() && _input.jumpThisFrame)
+                {
+                    if (!_isTouchingWall)
+                        _wasLastWallFlipped = !_flipDirection;
+
+                    WallJump();
+                }
 
                 if (_isWallSliding)
                 {
+                    _wasLastWallFlipped = _flipDirection;
+                    _canCoyote = true;
+                    _isJumping = false;
+                    _lastWallSlideTime = Time.time;
                     rb.velocity = Vector2.down * wallSlideSpeed;
-
-                    if (_input.jumpThisFrame)
-                    {
-                        Debug.Log("JUMP");
-                        rb.AddForce(wallSlideJump.x * (_flipDirection ? 1f : -1f) * Vector2.right, ForceMode2D.Impulse);
-                        Jump(wallSlideJump.y);
-                        _isWallSliding = false;
-                    }
 
                     return;
                 }
 
                 if (_isGrabing)
                 {
+                    _wasLastWallFlipped = _flipDirection;
+                    _canCoyote = true;
+                    _isJumping = false;
+                    _lastGrabTime = Time.time;
                     rb.velocity = new Vector2(0f, _input.move.y * wallClimbSpeed);
 
-                    if (_input.jumpThisFrame)
-                    {
-                        Jump(wallClimbJump);
-                        _isGrabing = false;
-                    }
                     return;
                 }
             }
@@ -195,6 +209,7 @@ namespace Game.Player
                     if (!isGroundedPrevious)
                     {
                         _isJumping = false;
+                        _canCoyote = true;
                         if ((Time.time - _input.jumpPressedTime) <= jumpQueue)
                             _input.jumpThisFrame = true;
                     }
@@ -206,20 +221,46 @@ namespace Game.Player
                     if (isGroundedPrevious)
                         _lastGroundTime = Time.time;
 
-                    if ((Time.time - _lastGroundTime) <= coyoteTime && !_isJumping && _input.jumpThisFrame)
-                        Jump(jumpHeight);
+                    HandleCoyote();
 
                     rb.velocity -= Vector2.up * gravity * ((_input.jump && rb.velocity.y >= 0f ? fallMultiplier : lowJumpMultiplier) - 1) * Time.fixedDeltaTime;
                     break;
             }
         }
 
+        void HandleCoyote()
+        {
+            if (CanJump(Mathf.Max(_lastGrabTime, _lastWallSlideTime), coyoteWallJumpTime))
+            {
+                WallJump();
+                return;
+            }
+
+            if (CanJump(_lastGroundTime, coyoteTime))
+                Jump(jumpHeight);
+
+            bool CanJump(float time, float coyoteTime) =>
+                (Time.time - time) <= coyoteTime && _canCoyote && !_isJumping && _input.jumpThisFrame;
+        }
+
         void Jump(float jumpHeight)
         {
+            _canCoyote = false;
+
             rb.velocity = new Vector2(rb.velocity.x,
                 Mathf.Sqrt(jumpHeight * 2f * jumpGravity));
             _isJumping = true;
         }
+
+        void WallJump()
+        {
+            //rb.AddForce(wallSlideJump.x * (_wasLastWallFlipped ? 1f : -1f) * Vector2.right, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.right * wallJumpXForce * (_wasLastWallFlipped ? 1f : -1f), ForceMode2D.Impulse);
+            Jump(wallClimbJump);
+            _isWallSliding = false;
+            _isGrabing = false;
+        }
+
         void Grab()
         {
             Vector2 dir = _input.move;
@@ -241,13 +282,19 @@ namespace Game.Player
         bool IsGrounded() =>
             CheckBox(jumpCheckCenter, jumpCheckSize, jumpCheckLayer);
 
-        bool IsTouchingWall()
+        bool IsTouchingWall() =>
+            IsTouchingWall(_flipDirection);
+
+        bool IsTouchingWall(bool flip)
         {
             Vector2 center = wallCheckCenter;
-            center.x *= _flipDirection ? -1f : 1f;
+            center.x *= flip ? -1f : 1f;
 
             return CheckBox(center, wallCheckSize, wallCheckLayer);
         }
+
+        bool IsTouchingAnyWall() =>
+            IsTouchingWall(false) || IsTouchingWall(true);
 
         bool CheckBox(Vector2 center, Vector2 size, LayerMask layer) =>
             Physics2D.OverlapBoxAll((Vector2)transform.position + center, size, 0f, layer).Length != 0;

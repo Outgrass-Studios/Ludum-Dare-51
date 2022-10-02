@@ -158,12 +158,13 @@ MonoBehaviour:
   wallCheckLayer:
     serializedVersion: 2
     m_Bits: 64
-  wallClimbGravityThreashold: 0.5
+  wallClimbGravityThreashold: 0
   wallSlideSpeed: 3
   wallClimbSpeed: 10
   wallClimbJump: 1.5
-  wallSlideJump: {x: 40, y: 2}
+  wallJumpXForce: 45
   coyoteTime: 0.1
+  coyoteWallJumpTime: 0.2
   jumpQueue: 0.1
   horizontal:
     guid: 4598a973-2b42-4131-a23e-ad296d9e156c
