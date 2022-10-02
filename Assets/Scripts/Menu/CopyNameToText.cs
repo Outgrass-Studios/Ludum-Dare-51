@@ -6,11 +6,11 @@ namespace Game.Menu
     [ExecuteInEditMode]
     public class CopyNameToText : MonoBehaviour
     {
-        [SerializeField] TMP_Text text;
+        [SerializeField] ButtonController target;
 
         private void Reset()
         {
-            text = GetComponent<TMP_Text>();
+            target = GetComponent<ButtonController>();
         }
 
         private void Awake()
@@ -19,7 +19,6 @@ namespace Game.Menu
         }
 
 #if UNITY_EDITOR
-        [ExecuteInEditMode]
         private void Update()
         {
             UpdateText();
@@ -28,8 +27,8 @@ namespace Game.Menu
 
         void UpdateText()
         {
-            if (text != null)
-                text.text = name;
+            if (target != null)
+                target.text = name;
         }
     }
 }
