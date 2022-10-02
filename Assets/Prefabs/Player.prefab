@@ -294,7 +294,7 @@ MonoBehaviour:
   airAcceleration: 2
   airDeceleration: 0.5
   jumpGravity: 50
-  fallGravity: 25
+  fallGravity: 20
   fallMultiplier: 2
   lowJumpMultiplier: 3
   jumpHeight: 4
