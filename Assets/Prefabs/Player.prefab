@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2644069554161130604}
   - component: {fileID: 39234496}
   - component: {fileID: 2644069554161130611}
+  - component: {fileID: 2644069553622026430}
   - component: {fileID: 1249170479469477246}
   m_Layer: 2
   m_Name: Player
@@ -138,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2644069554161130604}
+  grapplingHook: {fileID: 2644069553622026430}
   walkSpeed: 10
   groundAcceleration: 10
   groundDeceleration: 6
@@ -178,6 +180,19 @@ MonoBehaviour:
     guid: 55f84f56-4935-4c3f-a4b9-941d53c92e94
   grappleJump:
     guid: 8db1dbbc-19c4-46c4-8934-b5e6be281e04
+--- !u!114 &2644069553622026430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644069554161130608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478beb57e2622e64fa9e2e1ffa9b4d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 2644069554161130604}
 --- !u!114 &1249170479469477246
 MonoBehaviour:
   m_ObjectHideFlags: 0
