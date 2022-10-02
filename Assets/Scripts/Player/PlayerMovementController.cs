@@ -44,6 +44,11 @@ namespace Game.Player
         [SerializeField] float coyoteWallJumpTime = 0.2f;
         [SerializeField] float jumpQueue = 0.2f;
 
+        [Header("Stamina")]
+        [SerializeField] float maximumStamina = 20f;
+        [SerializeField] float grabStamina = 3.5f;
+        [SerializeField] float climbStamina = 4f;
+
         [Header("Input")]
         [SerializeField] InputMapItemReference horizontal;
         [SerializeField] InputMapItemReference vertical;
@@ -70,6 +75,8 @@ namespace Game.Player
 
         bool _flipDirection = false;
         bool _wasLastWallFlipped = false;
+
+        float _stamina;
 
         private void Reset()
         {
@@ -103,6 +110,7 @@ namespace Game.Player
             qDebug.DisplayValue("velocity", rb.velocity);
             qDebug.DisplayValue("_canCoyote", _canCoyote);
             qDebug.DisplayValue("_isJumping", _isJumping);
+            qDebug.DisplayValue("_stamina", _stamina);
         }
 
         void ReadInput()
@@ -167,7 +175,7 @@ namespace Game.Player
 
             if (!_isGrounded)
             {
-                _isGrabing = _isTouchingWall && _input.grab && (gravityThreasholdReached || _isGrabing);
+                _isGrabing = _isTouchingWall && _input.grab && (gravityThreasholdReached || _isGrabing) && _stamina > 0f;
                 _isWallSliding = _isTouchingWall && isMovingHoritontally && gravityThreasholdReached && !_isGrabing;
      
                 if (IsTouchingAnyWall() && _input.jumpThisFrame)
@@ -191,6 +199,7 @@ namespace Game.Player
 
                 if (_isGrabing)
                 {
+                    _stamina -= (_input.move.y == 0f ? climbStamina : grabStamina) * Time.fixedDeltaTime;
                     _wasLastWallFlipped = _flipDirection;
                     _canCoyote = true;
                     _isJumping = false;
@@ -206,6 +215,7 @@ namespace Game.Player
                 case true:
                     if (!isGroundedPrevious)
                     {
+                        _stamina = maximumStamina;
                         _isJumping = false;
                         _canCoyote = true;
                         if ((Time.time - _input.jumpPressedTime) <= jumpQueue)
