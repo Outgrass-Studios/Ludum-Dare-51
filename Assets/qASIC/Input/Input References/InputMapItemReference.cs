@@ -18,13 +18,22 @@ namespace qASIC.InputManagement
             this.guid = guid;
         }
 
+        public InputMap GetMap()
+        {
+#if UNITY_EDITOR
+            return Application.isPlaying ? InputManager.Map : ProjectSettings.InputProjectSettings.Instance.map;
+#else
+            return InputManager.Map;
+#endif
+        }
+
         public bool ItemExists() =>
-            InputManager.Map?.ItemsDictionary.ContainsKey(guid) ?? false;
+            GetMap()?.ItemsDictionary.ContainsKey(guid) ?? false;
 
         public InputGroup GetGroup()
         {
             var item = GetItem();
-            return InputManager.Map?.groups
+            return GetMap()?.groups
             .Where(x => x.items.Contains(item))
             .First();
         }
@@ -34,7 +43,7 @@ namespace qASIC.InputManagement
             if (!ItemExists())
                 return null;
 
-            return InputManager.Map.ItemsDictionary[guid];
+            return GetMap().ItemsDictionary[guid];
         }
 
         public string GetGroupName() =>

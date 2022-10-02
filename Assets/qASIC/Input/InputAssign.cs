@@ -14,12 +14,12 @@ namespace qASIC.InputManagement.Menu
     {
         [Header("Updating name")]
         [SerializeField] TextMeshProUGUI nameText;
-        [SerializeField] string optionLabelName;
-        [SerializeField] string listeningForKeyText = "Listening for key";
+        public string optionLabelName;
+        public string listeningForKeyText = "Listening for key";
 
         [Header("Options")]
         [SerializeField] int playerIndex;
-        [SerializeField] InputMapItemReference inputAction;
+        public InputMapItemReference inputAction;
         [SerializeField] int keyIndex;
         [SerializeField] string keyRootPath = "key_keyboard";
 
@@ -27,7 +27,7 @@ namespace qASIC.InputManagement.Menu
         [SerializeField] UnityEvent OnStartListening;
         [SerializeField] UnityEvent OnAssign;
 
-        bool isListening = false;
+        [HideInInspector] public bool isListening = false;
 
         private void Reset()
         {
