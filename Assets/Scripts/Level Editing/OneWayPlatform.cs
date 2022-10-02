@@ -7,23 +7,31 @@ namespace Game
     [ExecuteInEditMode]
     public class OneWayPlatform : MonoBehaviour
     {
-        BoxCollider2D coll;
-        SpriteRenderer spriteRenderer;
+        [SerializeField] BoxCollider2D coll;
+        [SerializeField] SpriteRenderer spriteRenderer;
 
-        [ExecuteInEditMode]
-        private void Awake()
+        private void Reset()
         {
             coll = GetComponent<BoxCollider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
+        private void Awake()
+        {
+            UpdateCollision();
+        }
+
 #if UNITY_EDITOR
-        [ExecuteInEditMode]
         private void Update()
+        {
+            UpdateCollision();
+        }
+#endif
+
+        void UpdateCollision()
         {
             if (coll == null || spriteRenderer == null) return;
             coll.size = spriteRenderer.size;
         }
-#endif
     }
 }
