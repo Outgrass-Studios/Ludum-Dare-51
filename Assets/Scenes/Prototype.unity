@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 170298373}
   - component: {fileID: 170298372}
   - component: {fileID: 170298371}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cam_trigger_purpleblue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 175832471}
   - component: {fileID: 175832470}
   - component: {fileID: 175832469}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cam_trigger_greenblue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 491733338}
   - component: {fileID: 491733337}
   - component: {fileID: 491733336}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cam_trigger_blueyellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5661,7 +5661,7 @@ GameObject:
   - component: {fileID: 1221037384}
   - component: {fileID: 1221037383}
   - component: {fileID: 1221037385}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cam_trigger_bluepurple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5829,7 +5829,7 @@ GameObject:
   - component: {fileID: 1453913565}
   - component: {fileID: 1453913564}
   - component: {fileID: 1453913563}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cam_trigger_yellowblue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6002,7 +6002,7 @@ GameObject:
   - component: {fileID: 1834507412}
   - component: {fileID: 1834507411}
   - component: {fileID: 1834507410}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cam_trigger_bluegreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6111,7 +6111,7 @@ GameObject:
   - component: {fileID: 2093969658}
   - component: {fileID: 2093969657}
   - component: {fileID: 2093969656}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cam_trigger_greenyellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6234,7 +6234,7 @@ GameObject:
   - component: {fileID: 2133991362}
   - component: {fileID: 2133991361}
   - component: {fileID: 2133991360}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cam_trigger_yellowgreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6303,6 +6303,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2644069553622026430, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
+      propertyPath: jumpStep
+      value: 2.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644069553622026430, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
+      propertyPath: jumpDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644069553622026430, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
+      propertyPath: dampingCoefficient
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2644069554161130608, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6360,6 +6372,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4126937209993853004, guid: d17345ceaa873e045853fe59a6962755, type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4126937209993853004, guid: d17345ceaa873e045853fe59a6962755, type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4126937209993853007, guid: d17345ceaa873e045853fe59a6962755, type: 3}
       propertyPath: m_Name
       value: Game Camera

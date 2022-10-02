@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Game.Player
 {
@@ -8,6 +10,8 @@ namespace Game.Player
         [SerializeField] LineRenderer rope;
 
         [SerializeField][Range(0.0f, 1.0f)] float dampingCoefficient = 0.3f;
+        [SerializeField] float jumpStep = 0.3f;
+        [SerializeField] float jumpDuration = 0.3f;
         
         Vector2 anchor;
         float theta;
@@ -19,7 +23,7 @@ namespace Game.Player
 
         public void Grab(Vector2 moveDir)
         {
-            if (moveDir == Vector2.zero)
+            if (moveDir == Vector2.zero || moveDir == new Vector2(0.0f, -1.0f))
                 return;
             
             RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir, 10.0f);
@@ -29,22 +33,24 @@ namespace Game.Player
 
             grabbed = true;
             isResting = false;
-            rope.enabled = true;
-            velocity = 0;//rb.velocity.magnitude / 10;
+            velocity = 0;
             anchor = hit.point;
             lineLength = Vector2.Distance(transform.position, anchor);
             Vector2 line = new Vector3(anchor.x, anchor.y) - transform.position;
             theta = Mathf.PI / 2 - Mathf.Atan2(line.y, line.x);
+            UpdateRope();
+            rope.enabled = true;
         }
         public void LetGo()
         {
             grabbed = false;
             rope.enabled = false;
-            rb.velocity += new Vector2(Mathf.Sin(theta), Mathf.Cos(theta)) * velocity;
+            rb.velocity = - new Vector2(Mathf.Cos(theta), Mathf.Sin(theta)) * velocity;
         }
         public void Jump()
         {
-            // To implement
+            if (lineLength >= 2.0f && !isResting && CanJump())
+                StartCoroutine(InterpolateJump());
         }
         private void FixedUpdate()
         {
@@ -81,6 +87,22 @@ namespace Game.Player
         {
             velocity = 0;
             isResting = true;
+        }
+        private bool CanJump()
+        {
+            return !Physics2D.Raycast(transform.position, new Vector3(anchor.x, anchor.y) - transform.position, jumpStep + jumpStep/10);
+        }
+        IEnumerator InterpolateJump()
+        {
+            float startLineLength = lineLength;
+            float endLineLength = lineLength - jumpStep;
+            AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, jumpDuration, 1.0f);
+
+            for (float t = 0.0f; t <= jumpDuration; t += Time.fixedDeltaTime)
+            {
+                lineLength = Mathf.Lerp(startLineLength, endLineLength, curve.Evaluate(t));
+                yield return new WaitForFixedUpdate();
+            }
         }
     }
 }
