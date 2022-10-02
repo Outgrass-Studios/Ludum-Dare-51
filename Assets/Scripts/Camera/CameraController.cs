@@ -2,7 +2,6 @@ using UnityEngine;
 using qASIC;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
 namespace Game.Camera
 {

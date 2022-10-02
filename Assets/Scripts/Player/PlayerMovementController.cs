@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using qASIC;
 using qASIC.InputManagement;
-using UnityEngine.Windows;
+using Game.SpriteAnimations;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Game.Player
 {
@@ -26,7 +27,7 @@ namespace Game.Player
         [SerializeField] float lowJumpMultiplier;
         [SerializeField] float jumpHeight = 3f;
         [SerializeField] Vector2 jumpCheckCenter;
-        [SerializeField] Vector2 jumpCheckSize;
+        [SerializeField] float jumpCheckSize;
         [SerializeField] LayerMask jumpCheckLayer;
 
         [Header("Wall jumping & climbing")]
@@ -48,6 +49,13 @@ namespace Game.Player
         [SerializeField] float maximumStamina = 20f;
         [SerializeField] float grabStamina = 3.5f;
         [SerializeField] float climbStamina = 4f;
+
+        [Header("Animation")]
+        [SerializeField] SpriteAnimator anim;
+        [SerializeField] SpriteAnimation idleAnimation;
+        [SerializeField] SpriteAnimation runAnimation;
+        [SerializeField] SpriteAnimation climbAnimation;
+        [SerializeField] SpriteAnimation climbIdleAnimation;
 
         [Header("Input")]
         [SerializeField] InputMapItemReference horizontal;
@@ -105,12 +113,37 @@ namespace Game.Player
             if (_input.jumpThisFrame)
                 _input.jumpThisFrame = false;
 
+            SetAnimation();
+
             qDebug.DisplayValue("_isGrounded", _isGrounded);
 
             qDebug.DisplayValue("velocity", rb.velocity);
             qDebug.DisplayValue("_canCoyote", _canCoyote);
             qDebug.DisplayValue("_isJumping", _isJumping);
             qDebug.DisplayValue("_stamina", _stamina);
+        }
+
+        void SetAnimation()
+        {
+            if (anim == null) return;
+            SpriteAnimation currentAnimation;
+
+            switch (_isGrabing)
+            {
+                case false:
+                    currentAnimation = idleAnimation;
+                    if (_input.move.x != 0f)
+                        currentAnimation = runAnimation;
+                    break;
+                default:
+                    currentAnimation = climbIdleAnimation;
+                    if (_input.move.y != 0f)
+                        currentAnimation = climbAnimation;
+                    break;
+            }
+
+            anim.spriteRenderer.flipX = _flipDirection;
+            anim.ChangeAnimation(currentAnimation);
         }
 
         void ReadInput()
@@ -173,49 +206,50 @@ namespace Game.Player
             bool isMovingHoritontally = _input.move.x != 0f;
             bool gravityThreasholdReached = rb.velocity.y <= wallClimbGravityThreashold;
 
-            if (!_isGrounded)
-            {
-                _isGrabing = _isTouchingWall && _input.grab && (gravityThreasholdReached || _isGrabing) && _stamina > 0f;
-                _isWallSliding = _isTouchingWall && isMovingHoritontally && gravityThreasholdReached && !_isGrabing;
+
+            _isGrabing = _isTouchingWall && _input.grab && (gravityThreasholdReached || _isGrabing) && _stamina > 0f;
+            _isWallSliding = !_isGrounded && _isTouchingWall && isMovingHoritontally && gravityThreasholdReached && !_isGrabing;
      
-                if (IsTouchingAnyWall() && _input.jumpThisFrame)
-                {
-                    if (!_isTouchingWall)
-                        _wasLastWallFlipped = !_flipDirection;
+            if (IsTouchingAnyWall() && _input.jumpThisFrame)
+            {
+                if (!_isTouchingWall)
+                    _wasLastWallFlipped = !_flipDirection;
 
-                    WallJump();
-                }
-
-                if (_isWallSliding)
-                {
-                    _wasLastWallFlipped = _flipDirection;
-                    _canCoyote = true;
-                    _isJumping = false;
-                    _lastWallSlideTime = Time.time;
-                    rb.velocity = Vector2.down * wallSlideSpeed;
-
-                    return;
-                }
-
-                if (_isGrabing)
-                {
-                    _stamina -= (_input.move.y == 0f ? climbStamina : grabStamina) * Time.fixedDeltaTime;
-                    _wasLastWallFlipped = _flipDirection;
-                    _canCoyote = true;
-                    _isJumping = false;
-                    _lastGrabTime = Time.time;
-                    rb.velocity = new Vector2(0f, _input.move.y * wallClimbSpeed);
-
-                    return;
-                }
+                WallJump();
             }
+
+            if (_isGrounded)
+                _stamina = maximumStamina;
+
+            if (_isWallSliding)
+            {
+                _wasLastWallFlipped = _flipDirection;
+                _canCoyote = true;
+                _isJumping = false;
+                _lastWallSlideTime = Time.time;
+                rb.velocity = Vector2.down * wallSlideSpeed;
+
+                return;
+            }
+
+            if (_isGrabing)
+            {
+                _stamina -= (_input.move.y == 0f ? climbStamina : grabStamina) * Time.fixedDeltaTime;
+                _wasLastWallFlipped = _flipDirection;
+                _canCoyote = true;
+                _isJumping = false;
+                _lastGrabTime = Time.time;
+                rb.velocity = new Vector2(0f, _input.move.y * wallClimbSpeed);
+
+                return;
+            }
+
 
             switch (_isGrounded)
             {
                 case true:
                     if (!isGroundedPrevious)
                     {
-                        _stamina = maximumStamina;
                         _isJumping = false;
                         _canCoyote = true;
                         if ((Time.time - _input.jumpPressedTime) <= jumpQueue)
@@ -267,10 +301,10 @@ namespace Game.Player
             Jump(wallClimbJump);
             _isWallSliding = false;
             _isGrabing = false;
-        } 
+        }
 
         bool IsGrounded() =>
-            CheckBox(jumpCheckCenter, jumpCheckSize, jumpCheckLayer);
+            Physics2D.OverlapCircleAll((Vector2)transform.position + jumpCheckCenter, jumpCheckSize, jumpCheckLayer).Length != 0;
 
         bool IsTouchingWall() =>
             IsTouchingWall(_flipDirection);
@@ -282,7 +316,7 @@ namespace Game.Player
 
             return CheckBox(center, wallCheckSize, wallCheckLayer);
         }
-
+        
         bool IsTouchingAnyWall() =>
             IsTouchingWall(false) || IsTouchingWall(true);
 
@@ -292,7 +326,7 @@ namespace Game.Player
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(transform.position + (Vector3)jumpCheckCenter, new Vector3(jumpCheckSize.x, jumpCheckSize.y, 0.1f));
+            Gizmos.DrawWireSphere(transform.position + (Vector3)jumpCheckCenter, jumpCheckSize);
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(transform.position + (Vector3)wallCheckCenter, new Vector3(wallCheckSize.x, wallCheckSize.y, 0.1f));
         }
