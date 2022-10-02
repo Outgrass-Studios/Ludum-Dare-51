@@ -89,7 +89,8 @@ namespace Game.Player
 
         private void FixedUpdate()
         {
-            Gravity();
+            if(!grapplingHook.IsGrabbed())
+                Gravity();
 
             if (!_isGrabing)
                 Move(_isGrounded ? groundAcceleration : airAcceleration, _isGrounded ? groundDeceleration : airDeceleration);
@@ -119,6 +120,7 @@ namespace Game.Player
                 jumpThisFrame = (!previousJump && jumpInput) || jumpThisFramePrevious,
                 jumpPressedTime = jumpPressedTime,
                 grab = InputManager.GetInput(grab.GetGroupName(), grab.GetItemName()),
+                grapple = InputManager.GetInput(grapple.GetGroupName(), grapple.GetItemName())
             };
 
             if (_input.move.x != 0f && !_isGrabing)
@@ -127,12 +129,12 @@ namespace Game.Player
 
         void HandleGrappleInput()
         {
-            if (InputManager.GetInputDown(grapple.GetItemName()))
-                Grab();
+            if (InputManager.GetInputDown(grapple.GetItemName()) && !_isGrounded)
+                grapplingHook.Grab(_input.move);
             if (InputManager.GetInputUp(grapple.GetItemName()))
-                LetGo();
-            if (InputManager.GetInputDown(grappleJump.GetItemName()))
-                GrappleJump();
+                grapplingHook.LetGo();
+            if (InputManager.GetInputDown(grappleJump.GetItemName()) && _input.grapple)
+                grapplingHook.Jump();
         }
 
         void Move(float acceleration, float deceleration, float lerp = 1f)
@@ -255,14 +257,7 @@ namespace Game.Player
             Jump(wallClimbJump);
             _isWallSliding = false;
             _isGrabing = false;
-        }
-
-        void Grab()
-        { }
-        void LetGo()
-        { }
-        void GrappleJump()
-        { }
+        } 
 
         bool IsGrounded() =>
             CheckBox(jumpCheckCenter, jumpCheckSize, jumpCheckLayer);
@@ -300,6 +295,7 @@ namespace Game.Player
             public bool jumpThisFrame;
             public float jumpPressedTime;
             public bool grab;
+            public bool grapple;
         }
     }
 }
