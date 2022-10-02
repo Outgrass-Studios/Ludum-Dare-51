@@ -141,10 +141,10 @@ MonoBehaviour:
   walkSpeed: 10
   groundAcceleration: 10
   groundDeceleration: 6
-  airAcceleration: 5
+  airAcceleration: 2
   airDeceleration: 0.5
-  jumpGravity: 60
-  fallGravity: 45
+  jumpGravity: 50
+  fallGravity: 25
   fallMultiplier: 2
   lowJumpMultiplier: 3
   jumpHeight: 4
@@ -162,7 +162,7 @@ MonoBehaviour:
   wallSlideSpeed: 3
   wallClimbSpeed: 10
   wallClimbJump: 1.5
-  wallSlideJump: {x: 100, y: 100}
+  wallSlideJump: {x: 40, y: 2}
   coyoteTime: 0.1
   jumpQueue: 0.1
   horizontal:

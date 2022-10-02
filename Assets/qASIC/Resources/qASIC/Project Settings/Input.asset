@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Input
   m_EditorClassIdentifier: 
   map: {fileID: 11400000, guid: 261b2d3691b5bbe478491be75b79dc16, type: 2}
-  serializationType: 1
+  serializationType: 2
   filePath:
     buildPath:
       genericFolder: 62
@@ -22,6 +22,6 @@ MonoBehaviour:
     editorPath:
       genericFolder: 62
       filePath: input-editor.txt
-  uimAxisMapper: {fileID: 0}
+  uimAxisMapper: {fileID: 11400000, guid: 041847f58c2b1664cab13e3621daaf25, type: 2}
   startArgsDisableLoad: 1
   startArgsDisableSave: 1
