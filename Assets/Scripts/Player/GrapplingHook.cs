@@ -22,7 +22,12 @@ namespace Game.Player
         {
             if (moveDir == Vector2.zero || moveDir == new Vector2(0.0f, -1.0f))
                 return;
-            
+
+            if (moveDir == Vector2.right)
+                moveDir = new Vector2(1.0f, 1.0f);
+            if (moveDir == Vector2.left)
+                moveDir = new Vector2(-1.0f, 1.0f);
+
             RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir, float.MaxValue, LayerMask.GetMask("Ground"));
 
             if (!hit)
