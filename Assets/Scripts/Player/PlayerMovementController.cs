@@ -54,6 +54,9 @@ namespace Game.Player
         [SerializeField] [TagSelector] string trampolineTag;
         [SerializeField] float trampolineJumpHeight;
 
+        [Header("Grappling hook")]
+        [SerializeField] float grapplingJumpHeight = 4.5f;
+
         [Header("Animation")]
         [SerializeField] SpriteAnimator anim;
         [SerializeField] SpriteAnimation idleAnimation;
@@ -195,7 +198,10 @@ namespace Game.Player
             if (InputManager.GetInputUp(grapple.GetItemName()))
                 grapplingHook.LetGo();
             if (InputManager.GetInputDown(grappleJump.GetItemName()) && _input.grapple)
-                grapplingHook.Jump();
+            {
+                grapplingHook.LetGo();
+                Jump(grapplingJumpHeight);
+            }
         }
 
         void Move(float acceleration, float deceleration, float lerp = 1f)
