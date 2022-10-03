@@ -8,7 +8,7 @@ namespace qASIC.Toggling.Controllers
     public class PlatformTogglerController : TogglerController
     {
         [SerializeField] Toggler defaultToggler;
-        [SerializeField] TargetToggler[] platformTogglers;
+        [SerializeField] TargetToggler[] platformTogglers = new TargetToggler[0];
 
         [Serializable]
         public struct TargetToggler
@@ -21,6 +21,7 @@ namespace qASIC.Toggling.Controllers
         {
             for (int i = 0; i < platformTogglers.Length; i++)
             {
+                if (platformTogglers[i].toggler == null) continue;
                 if (platformTogglers[i].platform != qApplication.Platform) continue;
                 ChangeToggler(platformTogglers[i].toggler);
                 return;
