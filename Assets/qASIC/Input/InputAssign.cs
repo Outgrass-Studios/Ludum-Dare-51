@@ -33,8 +33,10 @@ namespace qASIC.InputManagement.Menu
         {
             Button button = GetComponent<Button>();
 
+#if UNITY_EDITOR
             if (button != null)
                 UnityEditor.Events.UnityEventTools.AddPersistentListener(button.onClick, StartListening);
+#endif
 
             nameText = GetComponentInChildren<TextMeshProUGUI>();
         }

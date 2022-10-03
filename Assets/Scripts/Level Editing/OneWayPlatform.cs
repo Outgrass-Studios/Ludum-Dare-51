@@ -10,6 +10,8 @@ namespace Game
         [SerializeField] BoxCollider2D coll;
         [SerializeField] SpriteRenderer spriteRenderer;
 
+        [SerializeField] Vector2 size = Vector2.one;
+
         private void Reset()
         {
             coll = GetComponent<BoxCollider2D>();
@@ -31,7 +33,7 @@ namespace Game
         void UpdateCollision()
         {
             if (coll == null || spriteRenderer == null) return;
-            coll.size = spriteRenderer.size;
+            coll.size = new Vector2(spriteRenderer.size.x * size.x, spriteRenderer.size.y * size.y);
         }
     }
 }
