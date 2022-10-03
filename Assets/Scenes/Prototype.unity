@@ -6531,6 +6531,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2644069554161130611, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
+      propertyPath: jumpCheckLayer.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644069554161130611, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
+      propertyPath: wallCheckLayer.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0132012b6af99e469c2691ed1d8caaf, type: 3}
 --- !u!1001 &4126937210110066739
@@ -6546,11 +6554,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4126937209993853004, guid: d17345ceaa873e045853fe59a6962755, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.018518519
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4126937209993853004, guid: d17345ceaa873e045853fe59a6962755, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.9629629
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4126937209993853007, guid: d17345ceaa873e045853fe59a6962755, type: 3}
       propertyPath: m_Name
@@ -6660,6 +6668,10 @@ PrefabInstance:
     - target: {fileID: 4634131314737258445, guid: 649f199a02e25bf498c7464f380207fe, type: 3}
       propertyPath: m_Name
       value: onewayplatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 4634131314737258445, guid: 649f199a02e25bf498c7464f380207fe, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649f199a02e25bf498c7464f380207fe, type: 3}

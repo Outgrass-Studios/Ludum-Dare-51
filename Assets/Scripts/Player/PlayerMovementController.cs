@@ -132,6 +132,8 @@ namespace Game.Player
 
             if (!_isGrabing)
                 Move(_isGrounded ? groundAcceleration : airAcceleration, _isGrounded ? groundDeceleration : airDeceleration);
+            else if (_isGrounded)
+                grapplingHook.LetGo();
 
             if (_input.jumpThisFrame)
                 _input.jumpThisFrame = false;

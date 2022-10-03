@@ -24,7 +24,7 @@ namespace Game.Player
             if (moveDir == Vector2.zero || moveDir == new Vector2(0.0f, -1.0f))
                 return;
             
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir, float.MaxValue, LayerMask.GetMask("Ground"));
 
             if (!hit)
                 return;
@@ -61,7 +61,7 @@ namespace Game.Player
                 velocity += acceleration * Time.fixedDeltaTime;
                 theta += velocity * Time.deltaTime;
             }
-            transform.position = anchor - new Vector2(Mathf.Sin(theta), Mathf.Cos(theta)) * lineLength;
+            rb.MovePosition(anchor - new Vector2(Mathf.Sin(theta), Mathf.Cos(theta)) * lineLength);
         }
 
         void UpdateRope()
