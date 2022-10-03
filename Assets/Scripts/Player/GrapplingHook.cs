@@ -67,7 +67,7 @@ namespace Game.Player
         public void Pull(float pullSpeed)
         {
             lineLength -= pullSpeed * Time.fixedDeltaTime;
-            lineLength = Mathf.Clamp(lineLength, 0.0f, float.MaxValue);
+            lineLength = Mathf.Clamp(lineLength, 0.1f, float.MaxValue);
         }
 
         public bool IsGrabbed() => grabbed;

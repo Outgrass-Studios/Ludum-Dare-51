@@ -72,7 +72,6 @@ namespace Game.Player
         [SerializeField] InputMapItemReference grab;
         [SerializeField] InputMapItemReference grapple;
         [SerializeField] InputMapItemReference grappleJump;
-        [SerializeField] InputMapItemReference grapplePull;
 
         PlayerInput _input = new PlayerInput()
         { 
@@ -86,6 +85,7 @@ namespace Game.Player
         bool _isGrabing;
         bool _isWallSliding;
         bool _canUseGrapplingHook;
+        bool _canGrappleJump;
 
         float _lastWallSlideTime;
         float _lastGrabTime;
@@ -206,12 +206,12 @@ namespace Game.Player
             }
             if (InputManager.GetInputUp(grapple.GetItemName()))
                 grapplingHook.LetGo();
-            if (InputManager.GetInputDown(grappleJump.GetItemName()) && _input.grapple)
+            if (InputManager.GetInputDown(jump.GetItemName()) && grapplingHook.IsGrabbed())
             {
                 Jump(grapplingJumpHeight);
                 grapplingHook.LetGo();
             }
-            if (InputManager.GetInput(grapplePull.GetGroupName(), grapplePull.GetItemName()))
+            if (InputManager.GetInput(grappleJump.GetGroupName(), grappleJump.GetItemName()))
                 grapplingHook.Pull(grapplingPullSpeed);
         }
 
