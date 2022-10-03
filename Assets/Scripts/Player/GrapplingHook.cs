@@ -61,8 +61,13 @@ namespace Game.Player
 
         void UpdateRope()
         {
-            rope.SetPosition(0, transform.position);
+            rope.SetPosition(0, transform.position + new Vector3(0.0f, 0.15f));
             rope.SetPosition(1, anchor);
+        }
+        public void Pull(float pullSpeed)
+        {
+            lineLength -= pullSpeed * Time.fixedDeltaTime;
+            lineLength = Mathf.Clamp(lineLength, 0.0f, float.MaxValue);
         }
 
         public bool IsGrabbed() => grabbed;

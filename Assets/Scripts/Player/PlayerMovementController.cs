@@ -56,6 +56,7 @@ namespace Game.Player
 
         [Header("Grappling hook")]
         [SerializeField] float grapplingJumpHeight = 4.5f;
+        [SerializeField] float grapplingPullSpeed = 4.5f;
 
         [Header("Animation")]
         [SerializeField] SpriteAnimator anim;
@@ -71,6 +72,7 @@ namespace Game.Player
         [SerializeField] InputMapItemReference grab;
         [SerializeField] InputMapItemReference grapple;
         [SerializeField] InputMapItemReference grappleJump;
+        [SerializeField] InputMapItemReference grapplePull;
 
         PlayerInput _input = new PlayerInput()
         { 
@@ -209,6 +211,8 @@ namespace Game.Player
                 Jump(grapplingJumpHeight);
                 grapplingHook.LetGo();
             }
+            if (InputManager.GetInput(grapplePull.GetGroupName(), grapplePull.GetItemName()))
+                grapplingHook.Pull(grapplingPullSpeed);
         }
 
         void Move(float acceleration, float deceleration, float lerp = 1f)

@@ -182,7 +182,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -306,12 +306,12 @@ MonoBehaviour:
   jumpCheckSize: 0.22
   jumpCheckLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   wallCheckCenter: {x: 0.275, y: 0.5}
   wallCheckSize: {x: 0.05, y: 0.55}
   wallCheckLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   wallClimbGravityThreashold: 0
   wallSlideSpeed: 3
   wallClimbSpeed: 10
@@ -325,6 +325,8 @@ MonoBehaviour:
   climbStamina: 4
   trampolineTag: Trampoline
   trampolineJumpHeight: 12
+  grapplingJumpHeight: 4.5
+  grapplingPullSpeed: 4.5
   anim: {fileID: 1162288269147117123}
   idleAnimation: {fileID: 11400000, guid: 1c9aaefc16e753546a8a2e3e903dc91e, type: 2}
   runAnimation: {fileID: 11400000, guid: efd457bff490b4e4c84b01db964b7cc4, type: 2}
@@ -342,6 +344,8 @@ MonoBehaviour:
     guid: 55f84f56-4935-4c3f-a4b9-941d53c92e94
   grappleJump:
     guid: 8db1dbbc-19c4-46c4-8934-b5e6be281e04
+  grapplePull:
+    guid: a1042459-4a14-4561-b9cc-7230b2e33f80
 --- !u!114 &2644069553622026430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,9 +360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 2644069554161130604}
   rope: {fileID: 7690285388610589743}
-  dampingCoefficient: 0.426
-  jumpStep: 0.3
-  jumpDuration: 0.3
+  dampingCoefficient: 0.287
 --- !u!114 &1249170479469477246
 MonoBehaviour:
   m_ObjectHideFlags: 0
