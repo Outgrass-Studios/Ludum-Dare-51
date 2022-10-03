@@ -11,7 +11,8 @@ namespace Game.Checkpoints
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (!collision.CompareTag(PLAYER_TAG)) return;
-            
+
+            PlayerStateReverter.RestartPosition = transform.position + respawnPosition;
             LevelCheckpointManager.CreateState();
         }
 
