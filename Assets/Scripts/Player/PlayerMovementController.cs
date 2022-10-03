@@ -299,7 +299,6 @@ namespace Game.Player
 
         void HandleCoyote()
         {
-            Debug.Log($"ASD : {CanJump(_lastGroundTime, coyoteTime)}");
             if (CanJump(Mathf.Max(_lastGrabTime, _lastWallSlideTime), coyoteWallJumpTime))
             {
                 WallJump();
