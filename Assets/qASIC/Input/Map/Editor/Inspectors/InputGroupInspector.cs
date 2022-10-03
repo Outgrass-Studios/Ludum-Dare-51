@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -44,3 +45,4 @@ namespace qASIC.InputManagement.Map.Internal.Inspectors
         }
     }
 }
+#endif

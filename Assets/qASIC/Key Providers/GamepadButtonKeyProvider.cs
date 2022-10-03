@@ -1,7 +1,5 @@
-﻿#if UNITY_EDITOR
-using UnityEngine;
+﻿using UnityEngine;
 using System;
-using UnityEditor;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -33,11 +31,10 @@ namespace qASIC.InputManagement.Internal.KeyProviders
             }
         }
 
-        public override string OnPopupGUI(Rect rect, string key, bool isActive, bool isFocused)
-        {
-            GamepadButton button = _KeyNameMap.Forward[key];
-            return _KeyNameMap.Reverse[(GamepadButton)EditorGUI.EnumPopup(rect, string.Empty, button)];
-        }
+        //public override string OnPopupGUI(Rect rect, string key, bool isActive, bool isFocused)
+        //{
+        //    GamepadButton button = _KeyNameMap.Forward[key];
+        //    return _KeyNameMap.Reverse[(GamepadButton)EditorGUI.EnumPopup(rect, string.Empty, button)];
+        //}
     }
 }
-#endif
