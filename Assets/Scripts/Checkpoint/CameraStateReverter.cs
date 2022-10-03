@@ -17,7 +17,13 @@ namespace Game.Checkpoints
         private void Start()
         {
             RestartTrack = cam.CurrentTrack;
+            LevelCheckpointManager.OnStateCreated += LevelCheckpointManager_OnStateCreated;
             LevelCheckpointManager.OnStateReverted += LevelCheckpointManager_OnStateReverted;
+        }
+
+        private void LevelCheckpointManager_OnStateCreated()
+        {
+            RestartTrack = cam.CurrentTrack;
         }
 
         private void LevelCheckpointManager_OnStateReverted()
