@@ -13,11 +13,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3916975540470009370, guid: b0bd2c8fe1b08ce49a6032789ee3cf08, type: 3}
       propertyPath: highlightedFormat
-      value: '>{0}<'
+      value: '> {0} <'
       objectReference: {fileID: 0}
     - target: {fileID: 7679294683924937720, guid: b0bd2c8fe1b08ce49a6032789ee3cf08, type: 3}
       propertyPath: m_text
-      value: Button
+      value: Button_middle
       objectReference: {fileID: 0}
     - target: {fileID: 7679294683924937720, guid: b0bd2c8fe1b08ce49a6032789ee3cf08, type: 3}
       propertyPath: m_HorizontalAlignment
