@@ -88,6 +88,8 @@ namespace Game.Player
         bool _flipDirection = false;
         bool _wasLastWallFlipped = false;
 
+        bool _canControlAirTime;
+
         float _stamina;
 
         Collider2D[] _groundColliders;
@@ -228,8 +230,8 @@ namespace Game.Player
             {
                 if (collider.CompareTag(trampolineTag))
                 {
-                    Jump(trampolineJumpHeight);
-                    _isJumping = false;
+                    Jump(trampolineJumpHeight, false);
+                    _isGrounded = false;
                 }
             }
 
@@ -292,7 +294,7 @@ namespace Game.Player
 
                     HandleCoyote();
 
-                    rb.velocity -= Vector2.up * gravity * ((_input.jump && rb.velocity.y >= 0f ? fallMultiplier : lowJumpMultiplier) - 1) * Time.fixedDeltaTime;
+                    rb.velocity -= Vector2.up * gravity * ((_input.jump && _canControlAirTime && rb.velocity.y >= 0f ? fallMultiplier : lowJumpMultiplier) - 1) * Time.fixedDeltaTime;
                     break;
             }
         }
@@ -312,8 +314,9 @@ namespace Game.Player
                 (Time.time - time) <= coyoteTime && _canCoyote && !_isJumping && _input.jumpThisFrame;
         }
 
-        void Jump(float jumpHeight)
+        void Jump(float jumpHeight, bool canControlAirTime = true)
         {
+            _canControlAirTime = canControlAirTime;
             _canCoyote = false;
 
             rb.velocity = new Vector2(rb.velocity.x,

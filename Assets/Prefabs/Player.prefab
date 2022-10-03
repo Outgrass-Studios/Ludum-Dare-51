@@ -320,7 +320,7 @@ MonoBehaviour:
   grabStamina: 3.5
   climbStamina: 4
   trampolineTag: Trampoline
-  trampolineJumpHeight: 8
+  trampolineJumpHeight: 12
   anim: {fileID: 1162288269147117123}
   idleAnimation: {fileID: 11400000, guid: 1c9aaefc16e753546a8a2e3e903dc91e, type: 2}
   runAnimation: {fileID: 11400000, guid: efd457bff490b4e4c84b01db964b7cc4, type: 2}

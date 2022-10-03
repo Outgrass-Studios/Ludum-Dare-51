@@ -167,6 +167,14 @@ PrefabInstance:
       propertyPath: keyRootPath
       value: key_gamepad
       objectReference: {fileID: 0}
+    - target: {fileID: 6885141084358304009, guid: 4606317800771b74ca1da4a24b14b8ac, type: 3}
+      propertyPath: keyIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885141084358304009, guid: 4606317800771b74ca1da4a24b14b8ac, type: 3}
+      propertyPath: keyRootPath
+      value: key_gamepad
+      objectReference: {fileID: 0}
     - target: {fileID: 8625786661717352638, guid: 4606317800771b74ca1da4a24b14b8ac, type: 3}
       propertyPath: m_text
       value: Gamepad Settings
