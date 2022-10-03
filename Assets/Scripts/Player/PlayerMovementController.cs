@@ -4,7 +4,7 @@ using UnityEngine;
 using qASIC;
 using qASIC.InputManagement;
 using Game.SpriteAnimations;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using Game.Checkpoints;
 
 namespace Game.Player
 {
@@ -89,6 +89,18 @@ namespace Game.Player
         private void Reset()
         {
             rb = GetComponent<Rigidbody2D>();
+        }
+
+        private void Awake()
+        {
+            LevelCheckpointManager.OnStateReverted += LevelCheckpointManager_OnStateReverted;
+        }
+
+        private void LevelCheckpointManager_OnStateReverted()
+        {
+            _stamina = maximumStamina;
+            _flipDirection = false;
+            _wasLastWallFlipped = false;
         }
 
         private void Update()
