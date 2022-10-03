@@ -17,7 +17,6 @@ namespace Game.Player
         float velocity;
 
         bool grabbed;
-        bool isResting;
 
         public void Grab(Vector2 moveDir)
         {
@@ -30,7 +29,6 @@ namespace Game.Player
                 return;
 
             grabbed = true;
-            isResting = false;
             velocity = 0;
             anchor = hit.point;
             lineLength = Vector2.Distance(transform.position, anchor);
@@ -55,12 +53,9 @@ namespace Game.Player
         }
         void UpdatePosition()
         {
-            if (!isResting)
-            {
-                float acceleration = -(100.0f / lineLength) * 2 * Mathf.Sin(theta) - velocity * dampingCoefficient;
-                velocity += acceleration * Time.fixedDeltaTime;
-                theta += velocity * Time.deltaTime;
-            }
+            float acceleration = -(100.0f / lineLength) * 2 * Mathf.Sin(theta) - velocity * dampingCoefficient;
+            velocity += acceleration * Time.fixedDeltaTime;
+            theta += velocity * Time.deltaTime;
             rb.MovePosition(anchor - new Vector2(Mathf.Sin(theta), Mathf.Cos(theta)) * lineLength);
         }
 
@@ -79,7 +74,6 @@ namespace Game.Player
         private void OnCollisionStay2D(Collision2D collision)
         {
             velocity = 0;
-            isResting = true;
         }
     }
 }
