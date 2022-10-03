@@ -50,6 +50,10 @@ namespace Game.Player
         [SerializeField] float grabStamina = 3.5f;
         [SerializeField] float climbStamina = 4f;
 
+        [Header("Trampoline")]
+        [SerializeField] [TagSelector] string trampolineTag;
+        [SerializeField] float trampolineJumpHeight;
+
         [Header("Animation")]
         [SerializeField] SpriteAnimator anim;
         [SerializeField] SpriteAnimation idleAnimation;
@@ -85,6 +89,8 @@ namespace Game.Player
         bool _wasLastWallFlipped = false;
 
         float _stamina;
+
+        Collider2D[] _groundColliders;
 
         private void Reset()
         {
@@ -218,6 +224,15 @@ namespace Game.Player
             bool isMovingHoritontally = _input.move.x != 0f;
             bool gravityThreasholdReached = rb.velocity.y <= wallClimbGravityThreashold;
 
+            foreach (var collider in _groundColliders)
+            {
+                if (collider.CompareTag(trampolineTag))
+                {
+                    Jump(trampolineJumpHeight);
+                    _isJumping = false;
+                }
+            }
+
 
             _isGrabing = _isTouchingWall && _input.grab && (gravityThreasholdReached || _isGrabing) && _stamina > 0f;
             _isWallSliding = !_isGrounded && _isTouchingWall && isMovingHoritontally && gravityThreasholdReached && !_isGrabing;
@@ -284,6 +299,7 @@ namespace Game.Player
 
         void HandleCoyote()
         {
+            Debug.Log($"ASD : {CanJump(_lastGroundTime, coyoteTime)}");
             if (CanJump(Mathf.Max(_lastGrabTime, _lastWallSlideTime), coyoteWallJumpTime))
             {
                 WallJump();
@@ -316,7 +332,7 @@ namespace Game.Player
         }
 
         bool IsGrounded() =>
-            Physics2D.OverlapCircleAll((Vector2)transform.position + jumpCheckCenter, jumpCheckSize, jumpCheckLayer).Length != 0;
+            (_groundColliders = Physics2D.OverlapCircleAll((Vector2)transform.position + jumpCheckCenter, jumpCheckSize, jumpCheckLayer)).Length != 0;
 
         bool IsTouchingWall() =>
             IsTouchingWall(_flipDirection);

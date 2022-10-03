@@ -292,7 +292,7 @@ MonoBehaviour:
   groundAcceleration: 10
   groundDeceleration: 6
   airAcceleration: 2
-  airDeceleration: 0.5
+  airDeceleration: 1
   jumpGravity: 50
   fallGravity: 20
   fallMultiplier: 2
@@ -319,6 +319,8 @@ MonoBehaviour:
   maximumStamina: 20
   grabStamina: 3.5
   climbStamina: 4
+  trampolineTag: Trampoline
+  trampolineJumpHeight: 8
   anim: {fileID: 1162288269147117123}
   idleAnimation: {fileID: 11400000, guid: 1c9aaefc16e753546a8a2e3e903dc91e, type: 2}
   runAnimation: {fileID: 11400000, guid: efd457bff490b4e4c84b01db964b7cc4, type: 2}
@@ -351,6 +353,8 @@ MonoBehaviour:
   rb: {fileID: 2644069554161130604}
   rope: {fileID: 7690285388610589743}
   dampingCoefficient: 0.426
+  jumpStep: 0.3
+  jumpDuration: 0.3
 --- !u!114 &1249170479469477246
 MonoBehaviour:
   m_ObjectHideFlags: 0
