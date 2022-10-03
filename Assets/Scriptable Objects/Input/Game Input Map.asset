@@ -28,10 +28,13 @@ MonoBehaviour:
     - rid: 295218457329270797
     - rid: 295218457329270798
   - itemName: Debug
-    guid: 6f25833f-4a9d-4bf5-b7a1-67093b45616e
+    guid: key_gamepad/Start
     items:
     - rid: 295218457329270784
     - rid: 295218457329270785
+    - rid: 4943071210801987584
+    - rid: 4943071210801987585
+    - rid: 4943071210801987586
   - itemName: UI
     guid: c9da6a94-6c25-4ccb-a211-927ff8871456
     items:
@@ -160,3 +163,24 @@ MonoBehaviour:
         guid: e364a749-0e24-4a7f-a206-d8c944474338
         keys:
         - key_keyboard/F3
+    - rid: 4943071210801987584
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Player Center Camera
+        guid: f44e1935-f646-428c-bbef-786ee1446991
+        keys:
+        - key_gamepad/Y
+    - rid: 4943071210801987585
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Player Fly
+        guid: 6849ec55-9678-4a78-818b-6ddc04971e1e
+        keys:
+        - key_gamepad/Back
+    - rid: 4943071210801987586
+      type: {class: InputBinding, ns: qASIC.InputManagement.Map, asm: qASIC}
+      data:
+        itemName: Player Camera Unlock
+        guid: 43b75f35-e4f9-49b6-abef-979d2466099d
+        keys:
+        - key_gamepad/RightStickButton

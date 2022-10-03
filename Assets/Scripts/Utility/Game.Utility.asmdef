@@ -1,7 +1,9 @@
 {
     "name": "Game.Utility",
     "rootNamespace": "Game",
-    "references": [],
+    "references": [
+        "GUID:b1181113609d0ad43a27c0338145e93c"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

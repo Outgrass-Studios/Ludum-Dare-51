@@ -1,4 +1,5 @@
 using System;
+using qASIC;
 
 namespace Game.Checkpoints
 {
@@ -15,6 +16,12 @@ namespace Game.Checkpoints
         public static void RevertState()
         {
             OnStateReverted?.Invoke();
+            qDebug.Log("[Checkpoint] Reverted level state", "checkpoint");
+        }
+
+        public static void KillPlayer()
+        {
+            RevertState();
         }
     }
 }

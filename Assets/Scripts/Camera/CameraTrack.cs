@@ -23,7 +23,7 @@ namespace Game.Camera
         public CameraTrack PreviousTrack => previousTrack;
         public CameraTrack NextTrack => nextTrack;
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             const float Z_SIZE = 0.1f;
             const float POINT_RADIUS = 0.5f;
