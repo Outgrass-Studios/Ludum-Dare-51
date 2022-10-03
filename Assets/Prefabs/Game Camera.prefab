@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4126937209993853005}
   - component: {fileID: 4126937209993853106}
   - component: {fileID: 4126937209993853105}
+  - component: {fileID: 3762521763141112749}
   m_Layer: 0
   m_Name: Game Camera
   m_TagString: MainCamera
@@ -159,3 +160,16 @@ MonoBehaviour:
   smoothness: 0.125
   defaultZOffset: -20
   defaultTrack: {fileID: 0}
+--- !u!114 &3762521763141112749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4126937209993853007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516d29232485d124ea0d5ac41884c925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 4126937209993853105}

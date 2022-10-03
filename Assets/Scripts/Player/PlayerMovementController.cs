@@ -199,8 +199,8 @@ namespace Game.Player
                 grapplingHook.LetGo();
             if (InputManager.GetInputDown(grappleJump.GetItemName()) && _input.grapple)
             {
-                grapplingHook.LetGo();
                 Jump(grapplingJumpHeight);
+                grapplingHook.LetGo();
             }
         }
 
