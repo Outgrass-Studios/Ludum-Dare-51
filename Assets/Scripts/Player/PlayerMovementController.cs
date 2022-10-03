@@ -83,6 +83,7 @@ namespace Game.Player
         bool _isJumping;
         bool _isGrabing;
         bool _isWallSliding;
+        bool _canUseGrapplingHook;
 
         float _lastWallSlideTime;
         float _lastGrabTime;
@@ -146,6 +147,7 @@ namespace Game.Player
             qDebug.DisplayValue("_canCoyote", _canCoyote);
             qDebug.DisplayValue("_isJumping", _isJumping);
             qDebug.DisplayValue("_stamina", _stamina);
+            qDebug.DisplayValue("_canUseGrapplingHook", _canUseGrapplingHook);
         }
 
         void SetAnimation()
@@ -195,8 +197,11 @@ namespace Game.Player
 
         void HandleGrappleInput()
         {
-            if (InputManager.GetInputDown(grapple.GetItemName()) && !_isGrounded)
+            if (InputManager.GetInputDown(grapple.GetItemName()) && !_isGrounded && _canUseGrapplingHook)
+            {
                 grapplingHook.Grab(_input.move);
+                _canUseGrapplingHook = false;
+            }
             if (InputManager.GetInputUp(grapple.GetItemName()))
                 grapplingHook.LetGo();
             if (InputManager.GetInputDown(grappleJump.GetItemName()) && _input.grapple)
@@ -292,6 +297,8 @@ namespace Game.Player
                         if ((Time.time - _input.jumpPressedTime) <= jumpQueue)
                             _input.jumpThisFrame = true;
                     }
+
+                    _canUseGrapplingHook = true;
 
                     if (_input.jumpThisFrame)
                         Jump(jumpHeight);
