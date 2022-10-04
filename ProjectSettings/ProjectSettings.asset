@@ -537,13 +537,14 @@ PlayerSettings:
   webGLTemplate: APPLICATION:Default
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
-  webGLCompressionFormat: 0
+  webGLCompressionFormat: 2
   webGLWasmArithmeticExceptions: 0
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
     Standalone: qASIC_CABLEBOX_DISABLE_UIM_GAMEPADS;DOTWEEN_ENABLED;TOOLBOX_FORCE_DEFAULT_LISTS
+    WebGL: DOTWEEN_ENABLED;TOOLBOX_FORCE_DEFAULT_LISTS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

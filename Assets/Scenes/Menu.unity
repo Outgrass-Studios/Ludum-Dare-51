@@ -451,7 +451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4126937209993853004, guid: d17345ceaa873e045853fe59a6962755, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.018518519
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4126937209993853004, guid: d17345ceaa873e045853fe59a6962755, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
@@ -459,7 +459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4126937209993853004, guid: d17345ceaa873e045853fe59a6962755, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.9629629
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4126937209993853007, guid: d17345ceaa873e045853fe59a6962755, type: 3}
       propertyPath: m_Name
@@ -775,6 +775,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87066162b09693945a0d594778ed6920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1393091694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393091689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f9dca4da28d24040baa089f5cb75c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  platforms: 11000000
 --- !u!1 &1644105079
 GameObject:
   m_ObjectHideFlags: 0
